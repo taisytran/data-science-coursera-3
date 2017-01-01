@@ -61,5 +61,17 @@ data_mean_std$activity_label <-
          levels = activity_label$V1,
          labels = activity_label$V2)
 
+
+
 #4. Appropriately labels the data set with descriptive variable names.
 #5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+write.table(data_mean_std, paste0(foldername,"/tidyData.txt"),row.name=FALSE)
+measureVars <- names(data_mean_std)[3:(length(data_mean_std)-1)] # Measure variable will be all columns except the first two and last one
+dataMelt    <- melt(data_mean_std, id = c("subjectID","activity","activity_label"), measure.vars = measureVars)
+
+# CASTING DATA FRAME
+tidyData   <- dcast(dataMelt, subjectID + activity ~ variable, mean)
+
+
+
