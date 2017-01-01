@@ -63,3 +63,7 @@ data_mean_std$activity_label <-
 
 #4. Appropriately labels the data set with descriptive variable names.
 #5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+CombinedData.melted <- melt(CombinedData, id = c("subject", "activity"))
+
+CombinedData.mean <- dcast(CombinedData.melted, 
+                           subject + activity ~ variable, mean)
